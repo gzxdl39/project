@@ -14,9 +14,7 @@
 Route::get('/','Home\UserController@index');
 //管理员模块
 Route::resource("/user","Admin\UserController");
+Route::resource("/cate","Admin\CateController");
 
-// Route::get('/user','Admin\UserController@index');
-// Route::get('/user/create','Admin\UserController@create');
-// Route::post('/user/store','Admin\UserController@store');
 //Ajax
 Route::get('/ajax/{m}','Admin\AjaxController@index');

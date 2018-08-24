@@ -23,7 +23,7 @@ class AjaxController extends Controller
             return '2';
         }
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *

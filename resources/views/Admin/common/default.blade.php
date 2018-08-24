@@ -38,6 +38,9 @@
             border-color: #eb979b;
             color: #9b4449;
         }
+        .ab{
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -66,23 +69,23 @@
         <div class="sidebar-content">
             <ul class="sidebar-list">
                 <li>
-                    <a href="#"><i class="icon-font">&#xe003;</i>用户模块</a>
-                    <ul class="sub-menu">
+                    <a href="javascript:void()" class="aa"><i class="icon-font">&#xe003;</i>用户模块</a>
+                    <ul class="sub-menu ab" >
                         <li><a href="/user/create"><i class="icon-font">&#xe008;</i>添加用户</a></li>
-                        <li><a href="/user/index"><i class="icon-font">&#xe005;</i>用户列表</a></li>
+                        <li><a href="/user"><i class="icon-font">&#xe005;</i>用户列表</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#"><i class="icon-font">&#xe003;</i>分类模块</a>
-                    <ul class="sub-menu">
+                    <a href="javascript:void()" class="aa"><i class="icon-font">&#xe003;</i>分类模块</a>
+                    <ul class="sub-menu ab">
                         <li><a href="/cate/create"><i class="icon-font">&#xe008;</i>添加分类</a></li>
-                        <li><a href="/cate/index"><i class="icon-font">&#xe005;</i>分类列表</a></li>
+                        <li><a href="/cate"><i class="icon-font">&#xe005;</i>分类列表</a></li>
                       
                     </ul>
                 </li>
                 <li>
-                    <a href="#"><i class="icon-font">&#xe003;</i>商品模块</a>
-                    <ul class="sub-menu">
+                    <a href="javascript:void()" class="aa"><i class="icon-font">&#xe003;</i>商品模块</a>
+                    <ul class="sub-menu ab">
                         <li><a href="/good/create"><i class="icon-font">&#xe008;</i>添加商品</a></li>
                         <li><a href="/good/index"><i class="icon-font">&#xe005;</i>商品列表</a></li>
                       
@@ -90,8 +93,8 @@
                 </li>
 
                 <li>
-                    <a href="#"><i class="icon-font">&#xe003;</i>订单模块</a>
-                    <ul class="sub-menu">
+                    <a href="javascript:void()" class="aa"><i class="icon-font">&#xe003;</i>订单模块</a>
+                    <ul class="sub-menu ab">
                         <li><a href="/order/index"><i class="icon-font">&#xe005;</i>订单列表</a></li>
                       
                     </ul>
@@ -105,13 +108,17 @@
                 </div>
             @endif
             @if(session('error'))    
-                <div class="mws-form-message warning">
+                <div class="mws-form-message error">
                         {{session('error')}}
                 </div>
             @endif
     <script type="text/javascript">
         $(".mws-form-message").click(function(){
-            $(this).css({"display":"none"});
+            $(this).css({"display":"none"});    
+        });
+        $(".aa").click(function(){
+        //toggle 事件切换 事件是mouseover  如果元素是可见的切换为隐藏 如果元素是隐藏的  切换为可见
+        $(this).next("ul").toggle(1000);
         });
     </script>
     <!--/sidebar 需要重写的部分，不是公共的部分 ，需要覆盖的部分-->

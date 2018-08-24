@@ -75,6 +75,7 @@ class UserController extends Controller
     {
         //获取需要修改的数据
         $user=DB::table("shop_users")->where("uid",'=',$id)->first();
+        //加载修改页面
         return view("Admin.user.edit",['user'=>$user]);
     }
 
@@ -91,6 +92,7 @@ class UserController extends Controller
         $data=$request->except(['_token','_method','reupwd','field list']);
         //密码加密
         $data['upwd']=Hash::make($data['upwd']);
+        // 判断是否修改成功
         if(DB::table("shop_users")->where("uid","=",$id)->update($data)){
             return redirect("/user")->with('success',"修改成功");
         }else{
@@ -106,6 +108,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        //删除数据
         if(DB::table("shop_users")->where("uid",'=',$id)->delete()){
             return redirect("/user")->with('success','数据删除成功');
         }else{
