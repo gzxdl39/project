@@ -229,5 +229,6 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
     ],
+    'app_upload'=>'./Uploads'.date('Y-m-d'),
 
 ];

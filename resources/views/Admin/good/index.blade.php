@@ -1,33 +1,36 @@
-{extend name="common/default"}
-{block name="main"}
+@extends('Admin.common.default') 
+@section('content') 
 <!--/sidebar-->
     <div class="main-wrap">
-
         <div class="crumb-wrap">
-            <div class="crumb-list"><i class="icon-font"></i><a href="index.html">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">作品管理</span></div>
+            <div class="crumb-list"><i class="icon-font"></i><a href="index.html">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">商品列表</span></div>
         </div>
         <div class="search-wrap">
             <div class="search-content">
-                <form action="/good/index" method="get">
+                <form action="/shop" method="get">
                     <table class="search-tab">
                         <tr>
                             <th width="120">选择分类:</th>
                             <td>
-                                <select name="cate_id" id="cate_id" class="required">
-                                    <option value="0">请选择</option>
-                                    {foreach $cates as $k=>$v}
-                                    <?php
-                                        $n = substr_count($v->path,',')-1; 
-                                     ?>
-                                     <option
-                                          
-                                         value="{$v->cid}">{:str_repeat('&nbsp;',4*$n)}💞💞💞{$v->cname}</option>
-                                         
-                                    {/foreach}
+                                <select name="cname" id="cate_id" class="required">
+                                    <option value="" selected="selected">
+                                        @if($k)
+                                        {{$k}}
+                                        @else
+                                        请选择
+                                        @endif
+                                    </option>
+                                   @foreach($cate as $v)
+                                     <option value="{{$v->cname}}">
+                                       @if($v->pid == 0) --|{{$v->cname}}
+                                       @elseif($v->pid != 0) {{$v->cname}}
+                                       @endif
+                                    </option> 
+                                    @endforeach
                                 </select>
                             </td>
                             <th width="70">关键字:</th>
-                            <td><input class="common-text" placeholder="关键字" name="gname" value="{if(!empty($gname))}{$gname}{/if}" id="gname" type="text"></td>
+                            <td><input class="common-text" placeholder="关键字" name="sgname" value="{{$l}}{{$request['keywords'] or ''}}" id="sgname" type="text"></td>
                             <td><input class="btn btn-primary btn2" name="sub" value="查询" type="submit"></td>
                         </tr>
                     </table>
@@ -39,7 +42,6 @@
                 <div class="result-title">
                     <div class="result-list">
                         <a href="insert.html"><i class="icon-font"></i>新增作品</a>
-                        <a id="batchDel" href="javascript:void(0)"><i class="icon-font"></i>批量删除</a>
                         <a id="updateOrd" href="javascript:void(0)"><i class="icon-font"></i>更新排序</a>
                     </div>
                 </div>
@@ -56,39 +58,40 @@
                             <th>状态</th>
                             <th>操作</th>
                         </tr>
-                        {foreach $goods as $k=>$v}
                         <tr>
-                        
-                            <td>{$v->gid}</td>
-                            <td>{$v->gname}</td>
-                            <td>{$v->cate->cname}</td>
-                            <td><img style='width:100px;' src="{:config('app.disp_path')}{$v->gpic}" alt=""></td>
-                            <td>{$v->price}</td>
-                            <td>{$v->stock}</td>
-                            <td>{$v->salecnt}</td>
+                        @foreach($shop as $row)
+                            <td>{{$row->sgid}}</td>
+                            <td>{{$row->sgname}}</td>
+                            <td>{{$row->cname}}</td>
+                            <td><img style='width:100px;' src="{{$row->gpic}}" alt=""></td>
+                            <td>{{$row->price}}</td>
+                            <td>{{$row->stock}}</td>
+                            <td>{{$row->salecnt}}</td>
                             <td>
-                                {if $v->status == 1}
+                                @if($row->status == 1)
                                  新品
-                                {elseif $v->status == 2}
+                                @elseif($row->status == 2)
                                  上架
-                                {elseif $v->status == 3}
+                                @elseif($row->status == 3)
                                  下架
-                                 {/if}
+                                 @endif
                             </td>
-                           
                             <td>
-                                <a class="link-update" href="/good/{$v->gid}/edit">修改</a>
-                                 <a class="link-update" href="/good/up/{$v->gid}">上架</a>
-                                  <a class="link-update" href="/good/down/{$v->gid}">下架</a>
-                                <a class="link-del" onclick="return confirm('您确认要删除吗？')" href="/good/delete/{$v->gid}">删除</a>
+                                <form action="/shop/{{$row->sgid}}" method="post">
+                                {{csrf_field()}}
+                                {{method_field("DELETE")}}
+                                <a class="btn btn-danger" href="/shop/{{$row->sgid}}/edit">修改</a>
+                                 <a class="btn btn-success" href="/shop/up/{{$row->sgid}}">上架</a>
+                                 <button class="btn btn-warning del" onclick="return confirm('确定要删除吗？');" >删除</button>
+                                </form>
                             </td>
                         </tr>
-                      {/foreach}
+                        @endforeach
                     </table>
-                    <div class="list-page"> {$goods->render()|raw}</div>
+                    <div class="list-page">{{$shop->appends($request)->render()}}</div>
                 </div>
             </form>
         </div>
     </div>
     <!--/main-->
-{/block}
+@endsection

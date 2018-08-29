@@ -13,41 +13,37 @@ class CateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
-        //获取列表数据
-        $k=$request->input('cname');
-        $user=DB::table("shop_cate")->select(DB::raw('*,concat(path,cid)as paths'))->orderBy('paths')->where('cname','like',"%".$k."%")->get();
-         foreach($user as $key=>$value){
-            //获取path
-            $path=$value->path;
-            // echo $path."<br>";
-            //转换为数组
-            $arr=explode(",",$path);
-            //获取逗号个数
-            $len=count($arr)-1;
-            //加分隔符 str_repeat 重复字符串函数
-            $user[$key]->cname=str_repeat("--|",$len).$value->cname;
+    public static function getcatesbypid($pid){
+        $s=DB::table("shop_cate")->where('pid','=',$pid)->get();
+        $data=[];
+        //遍历
+        foreach($s as $key=>$value){
+            $value->sub=self::getcatesbypid($value->cid);
+            $data[]=$value;
         }
-        //加载页面
-        return view('Admin.cate.index',['user'=>$user,'request'=>$request->all()]);
+        return $data;
     }
 
-    //调整类别顺序 加分割符
-    public static function getCates(){
-        $cate=DB::table("shop_cate")->select(DB::raw('*,concat(path,",",cid)as paths'))->orderBy('paths')->get();
-        //添加分隔符
-        foreach($cate as $key=>$value){
-            //获取path
-            $path=$value->path;
-            //转换为数组
-            $arr=explode(",",$path);
-            //获取逗号个数
-            $len=count($arr)-1;
-            //加分隔符 str_repeat 重复字符串函数
-            $cate[$key]->cname=str_repeat("--|",$len).$value->cname;
-        }
-        return $cate;
+    public function index(Request $request)
+    {
+        // //获取列表数据
+        // $k=$request->input('cname');
+        $user=self::getcatesbypid(0);
+        // //查询
+        // $user=DB::table("shop_cate")->select(DB::raw('*,concat(path,cid)as paths'))->orderBy('paths')->where('cname','like',"%".$k."%")->get();
+        //  foreach($user as $key=>$value){
+        //     //获取path
+        //     $path=$value->path;
+        //     // echo $path."<br>";
+        //     //转换为数组
+        //     $arr=explode(",",$path);
+        //     //获取逗号个数
+        //     $len=count($arr)-1;
+        //     //加分隔符 str_repeat 重复字符串函数
+        //     $user[$key]->cname=str_repeat("--|",$len).$value->cname;
+        // }
+        //加载页面
+        return view('Admin.cate.index',['user'=>$user,'request'=>$request->all()]);
     }
 
     /**
@@ -57,10 +53,15 @@ class CateController extends Controller
      */
     public function create()
     {
-       //获取所有类别
-        $cate=self::getCates(); 
+        //获取所有类别
+        $cate=DB::table("shop_cate")->select(DB::raw('*,concat(path,",",cid)as paths'))->orderBy('paths')->get();
+        foreach ($cate as $value) {
+            if($value->pid==0){
+                $data[]=$value;
+            }
+        }
         //加载添加模板
-        return view("Admin.cate.insert",['cate'=>$cate]);
+        return view("Admin.cate.insert",['data'=>$data]);
     }
 
     /**

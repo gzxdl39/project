@@ -55,8 +55,8 @@
         </div>
         <div class="top-info-wrap">
             <ul class="top-info-list clearfix">
-                <li><a href="#">欢迎：{:session('adminUser.uname')}</a></li>
-                <li><a href="/admin/logout">退出</a></li>
+                <li><a href="#">欢迎：{{session('name')}}</a></li>
+                <li><a href="/login/destroy">退出</a></li>
             </ul>
         </div>
     </div>
@@ -71,14 +71,14 @@
                 <li>
                     <a href="javascript:void()" class="aa"><i class="icon-font">&#xe003;</i>用户模块</a>
                     <ul class="sub-menu ab" >
-                        <li><a href="/user/create"><i class="icon-font">&#xe008;</i>添加用户</a></li>
-                        <li><a href="/user"><i class="icon-font">&#xe005;</i>用户列表</a></li>
+                        <li><a href="/user/create"><i class="icon-font">&#xe008;</i>添加管理员</a></li>
+                        <li><a href="/user"><i class="icon-font">&#xe005;</i>管理员列表</a></li>
                     </ul>
                 </li>
                 <li>
                     <a href="javascript:void()" class="aa"><i class="icon-font">&#xe003;</i>分类模块</a>
                     <ul class="sub-menu ab">
-                        <li><a href="/cate/create"><i class="icon-font">&#xe008;</i>添加分类</a></li>
+                        <li><a href="/top"><i class="icon-font">&#xe008;</i>添加一级分类</a></li>
                         <li><a href="/cate"><i class="icon-font">&#xe005;</i>分类列表</a></li>
                       
                     </ul>
@@ -86,8 +86,8 @@
                 <li>
                     <a href="javascript:void()" class="aa"><i class="icon-font">&#xe003;</i>商品模块</a>
                     <ul class="sub-menu ab">
-                        <li><a href="/good/create"><i class="icon-font">&#xe008;</i>添加商品</a></li>
-                        <li><a href="/good/index"><i class="icon-font">&#xe005;</i>商品列表</a></li>
+                        <li><a href="/shop/create"><i class="icon-font">&#xe008;</i>添加商品</a></li>
+                        <li><a href="/shop"><i class="icon-font">&#xe005;</i>商品列表</a></li>
                       
                     </ul>
                 </li>

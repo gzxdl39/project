@@ -15,7 +15,7 @@
       <table class="search-tab"> 
        <tbody>
         <tr> 
-         <th width="70">用户名:</th> 
+         <th>管理员名称:</th> 
          <td><input class="common-text" placeholder="关键字" name="uname" value="{{$request['keywords'] or ''}}" id="uname" type="text" /></td> 
          <td><input class="btn btn-primary btn2" value="查询" type="submit" /></td> 
         </tr> 
@@ -36,8 +36,8 @@
        <tbody>
         <tr> 
          <th>ID</th> 
-         <th>用户名</th> 
-         <th>权限</th> 
+         <th>管路员名称</th> 
+         <th>类别</th> 
          <th>性别</th> 
          <th>电话</th> 
          <th>创建时间</th> 
@@ -69,6 +69,7 @@
          <td>{{$row->create_at}}</td> 
          <td> 
             <form action="/user/{{$row->uid}}" method="post">
+                <a class="btn btn-primary" href="/role/{{$row->uid}}">权限</a> 
                 <a class="btn btn-danger" href="/user/{{$row->uid}}/edit">修改</a> 
                 {{csrf_field()}}
                 {{method_field("DELETE")}}

@@ -67,12 +67,14 @@
                 $(this).addClass("cur");
                 AUTH=false;
               }else{
+                $(this).next("span").css("color","green").html("");
                 AUTH=true;
               }
         });
         //性别
         $("input[type='radio']").change(function(){
             if($(this).attr('checked')){
+                $(this).next("span").css("color","green").html("");
                 SEX=true;
             }else{
                 $(this).next("span").css("color","red").html("请选择性别");
@@ -87,7 +89,7 @@
         m=$(this).val();
         //正则匹配
         if(m.match(/^[a-zA-Z0-9_-]{4,16}$/)==null){
-          $(this).next("span").css("color","red").html("用户名格式不对");
+          $(this).next("span").css("color","red").html("用户名必须为4-16位任意的数字字母下划线");
           $(this).addClass("cur");
           UNAME=false;
         }else{

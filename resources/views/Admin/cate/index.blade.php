@@ -15,17 +15,6 @@
      <div class="result-title"> 
      </div> 
      <div class="result-content"> 
-        <form action="/cate" method="get"> 
-      <table class="search-tab"> 
-       <tbody>
-        <tr> 
-         <th width="70">用户名:</th> 
-         <td><input class="common-text" placeholder="关键字" name="cname" value="{{$request['keywords'] or ''}}" id="cname" type="text" /></td> 
-         <td><input class="btn btn-primary btn2" value="查询" type="submit" /></td> 
-        </tr> 
-       </tbody>
-      </table> 
-     </form> 
       <table class="result-tab" width="100%"> 
        <tbody>
         <tr> 
@@ -36,7 +25,6 @@
          <th>操作</th> 
         </tr> 
         @foreach($user as $v)
-        @if($v->pid == 0)
         <tr class="eb" onclick="q({{$v->cid}})"> 
          <td>{{$v->cid}}</td> 
          <td>{{$v->cname}}</td> 
@@ -45,27 +33,43 @@
          <td> 
             <form action="/cate/{{$v->cid}}" method="post">
                 <a class="btn btn-danger" href="/cate/{{$v->cid}}/edit">修改</a> 
+                <a class="btn btn-danger" href="/class/{{$v->cid}}">添加子类</a>
                 {{csrf_field()}}
                 {{method_field("DELETE")}}
                 <button class="btn btn-success del" onclick="return confirm('确定要删除吗？');" >删除</button>
              </form>
         </tr> 
-        @endif
-        @if($v->pid != 0)
-        <tr class="{{$v->pid}}" style="display: none"> 
-         <td>{{$v->cid}}</td> 
-         <td>{{$v->cname}}</td> 
-         <td>{{$v->pid}}</td> 
-         <td>{{$v->path}}</td> 
+        @foreach($v->sub as $b)
+        <tr class="{{$b->pid}}" style="display: none" onclick="w({{$b->cid}})"> 
+         <td>{{$b->cid}}</td> 
+         <td>--|{{$b->cname}}</td> 
+         <td>{{$b->pid}}</td> 
+         <td>{{$b->path}}</td> 
          <td> 
-            <form action="/cate/{{$v->cid}}" method="post">
-                <a class="btn btn-danger" href="/cate/{{$v->cid}}/edit">修改</a> 
+            <form action="/cate/{{$b->cid}}" method="post">
+                <a class="btn btn-danger" href="/cate/{{$b->cid}}/edit">修改</a> 
+                <a class="btn btn-danger" href="/class/{{$b->cid}}">添加子类</a>
                 {{csrf_field()}}
                 {{method_field("DELETE")}}
                 <button class="btn btn-success del" onclick="return confirm('确定要删除吗？');" >删除</button>
              </form>
         </tr> 
-        @endif
+        @foreach($b->sub as $c)
+        <tr class="{{$c->pid}}" style="display: none"> 
+         <td>{{$c->cid}}</td> 
+         <td>--|--|{{$c->cname}}</td> 
+         <td>{{$c->pid}}</td> 
+         <td>{{$c->path}}</td> 
+         <td> 
+            <form action="/cate/{{$c->cid}}" method="post">
+                <a class="btn btn-danger" href="/cate/{{$c->cid}}/edit">修改</a> 
+                {{csrf_field()}}
+                {{method_field("DELETE")}}
+                <button class="btn btn-success del" onclick="return confirm('确定要删除吗？');" >删除</button>
+             </form>
+        </tr> 
+        @endforeach
+        @endforeach
         @endforeach
       </table> 
       <div class="list-page"> 
@@ -77,6 +81,9 @@
   <script type="text/javascript">
     function q(v){
         $("."+v).toggle(1000);
+    }
+    function w(b){
+        $("."+b).toggle(1000);
     }
   </script>
   @endsection
