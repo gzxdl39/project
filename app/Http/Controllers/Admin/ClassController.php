@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
+use Gregwar\Captcha\CaptchaBuilder;
 
 class ClassController extends Controller
 {
@@ -28,7 +29,19 @@ class ClassController extends Controller
      */
     public function create()
     {
-        //
+        ob_clean();//清除操作
+        $builder = new CaptchaBuilder;
+        //可以设置图片宽高及字体
+        $builder->build($width = 100, $height = 40, $font = null);
+        //获取验证码的内容
+        $phrase = $builder->getPhrase();
+        //把内容存入session
+        session(['vcode'=>$phrase]);
+        //生成图片
+        header("Cache-Control: no-cache, must-revalidate");
+        header('Content-Type: image/jpeg');
+        $builder->output();
+        // die;
     }
 
     /**
@@ -39,7 +52,12 @@ class ClassController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $m=$_GET['m'];
+        if($m==session('vcode')){
+            return '1';
+        }else{
+            return '2';
+        }
     }
 
     /**

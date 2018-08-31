@@ -69,7 +69,7 @@
         <div class="sidebar-content">
             <ul class="sidebar-list">
                 <li>
-                    <a href="javascript:void()" class="aa"><i class="icon-font">&#xe003;</i>用户模块</a>
+                    <a href="javascript:void()" class="aa"><i class="icon-font">&#xe003;</i>管理员模块</a>
                     <ul class="sub-menu ab" >
                         <li><a href="/user/create"><i class="icon-font">&#xe008;</i>添加管理员</a></li>
                         <li><a href="/user"><i class="icon-font">&#xe005;</i>管理员列表</a></li>

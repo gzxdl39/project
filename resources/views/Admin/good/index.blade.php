@@ -39,12 +39,6 @@
         </div>
         <div class="result-wrap">
             <form name="myform" id="myform" method="post">
-                <div class="result-title">
-                    <div class="result-list">
-                        <a href="insert.html"><i class="icon-font"></i>新增作品</a>
-                        <a id="updateOrd" href="javascript:void(0)"><i class="icon-font"></i>更新排序</a>
-                    </div>
-                </div>
                 <div class="result-content">
                     <table class="result-tab" width="100%">
                         <tr>

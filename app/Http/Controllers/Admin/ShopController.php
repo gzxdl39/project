@@ -118,14 +118,16 @@ class ShopController extends Controller
     {
         //去除不需要的数据
         $data=$request->except(['_token','_method']);
-        //随机上传图片名字
-        $name=time()+rand(1,10000);
-        //获取后缀
-        $ext=$request->file('gpic')->getClientOriginalExtension();
-        //移动
-        $request->file('gpic')->move(Config::get('app.app_upload'),$name.'.'.$ext);
-        //封装data
-        $data['gpic']=trim(Config::get('app.app_upload')."/".$name.".".$ext,".");
+        if($request->file('gpic')!=null){
+            //随机上传图片名字
+            $name=time()+rand(1,10000);
+            //获取后缀
+            $ext=$request->file('gpic')->getClientOriginalExtension();
+            //移动
+            $request->file('gpic')->move(Config::get('app.app_upload'),$name.'.'.$ext);
+            //封装data
+            $data['gpic']=trim(Config::get('app.app_upload')."/".$name.".".$ext,".");  
+        }
         //执行修改
         if(DB::table("shop_goods")->where("gid","=",$id)->update($data)){
             return redirect("/shop")->with('success',"商品修改成功");

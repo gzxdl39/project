@@ -161,7 +161,7 @@
                 TEL=true;
             }
        });
-       //给form 绑定提交事件
+        //给form 绑定提交事件
         $("#myform").submit(function(){
         //在每个匹配的元素上触发某类事件
             $("input").trigger("blur");

@@ -41,26 +41,31 @@ class RoleController extends Controller
     //保存角色权限
     public function create(Request $request)
     {
-        //获取新权限id
-        $role=$_POST['rids'];
-        //获取用户id
-        $rid=$request->input('rid');
-        //把用户已有角色信息删除
-        DB::table("point")->where("rid",'=',$rid)->delete();
-        //遍历
-        foreach($role as $v){
-            //封装需要插入user_role 数据表数据
-            $data['rid']=$rid;//用户id
-            $data['nid']=$v;
-            $info=DB::table("point")->insert($data);
+        if($request->input('rids')==null){
+            //获取用户id
+            $rid=$request->input('rid');
+            //把用户已有角色信息删除
+            $info=DB::table("point")->where("rid",'=',$rid)->delete();
+        }else{
+            //获取新权限id
+            $role=$_POST['rids'];
+            //获取用户id
+            $rid=$request->input('rid');
+            //把用户已有角色信息删除
+            DB::table("point")->where("rid",'=',$rid)->delete();
+            //遍历
+            foreach($role as $v){
+                //封装需要插入user_role 数据表数据
+                $data['rid']=$rid;//用户id
+                $data['nid']=$v;
+                $info=DB::table("point")->insert($data);
+            } 
         }
         if($info){
             return redirect("/user")->with("success","权限分配成功");
         }else{
-            return redirect("/role/$rid")->with("error","权限分配成功");
+            return redirect("/role/$rid")->with("error","权限分配失败");
         }
-        
-
     }
 
     /**

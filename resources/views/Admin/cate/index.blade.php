@@ -15,7 +15,7 @@
      <div class="result-title"> 
      </div> 
      <div class="result-content"> 
-      <table class="result-tab" width="100%"> 
+      <table class="result-tab" width="100%">  
        <tbody>
         <tr> 
          <th>ID</th> 
