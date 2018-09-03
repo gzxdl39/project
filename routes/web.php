@@ -47,6 +47,11 @@ Route::group(['middleware'=>'login'],function(){
 	Route::resource("/shop","Admin\ShopController");
 	//商品上架
 	Route::get('/shop/up/{id}','Admin\AjaxController@show');
+
+	// 订单管理
+	Route::resource("/order","Admin\OrderController");
+	//订单详情
+	Route::get('/order/show/{id}','Admin\ClassController@show');
 	
 	//Ajax
 	//判断管理员是否重复
@@ -58,6 +63,6 @@ Route::group(['middleware'=>'login'],function(){
 	//判断二级分类是否重复
 	Route::get('/ajax/edit/{m}','Admin\AjaxController@shop');
 });
-Route::get('/info','Admin\RoleController@store');
-Route::get('/sms','Admin\SmsController@index');
-Route::get('/sms/create','Admin\SmsController@create');
+// Route::get('/info','Admin\RoleController@store');
+// Route::get('/sms','Admin\SmsController@index');
+// Route::get('/sms/create','Admin\SmsController@create');

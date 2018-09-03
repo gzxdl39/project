@@ -1,18 +1,17 @@
-{extend name="common/default"}
-{block name="main"}
+@extends('Admin.common.default') 
+@section('content')
  <!--/sidebar-->
     <div class="main-wrap">
 
         <div class="crumb-wrap">
-            <div class="crumb-list"><i class="icon-font"></i><a href="/jscss/admin/design/">首页</a><span class="crumb-step">&gt;</span><a class="crumb-name" href="/jscss/admin/design/">作品管理</a><span class="crumb-step">&gt;</span><span>新增作品</span></div>
+            <div class="crumb-list"><i class="icon-font"></i><a href="/index">首页</a><span class="crumb-step">&gt;</span><span>订单详情</span></div>
         </div>
         <div class="result-wrap">
             <div class="result-content">
                 <form action="" method="post" id="myform" name="myform" enctype="multipart/form-data">
                     <table class="insert-tab" width="100%">
                         <tbody>
-                            {foreach $orders as $k=>$v}
-                            {foreach $v->detail as $kk=>$vv}
+                            
                             <table class="result-tab" width="100%">
                         <tr>
                             <th style='width:300px;'>商品名称</th>
@@ -21,21 +20,25 @@
                             <th>购买数量</th>
                             <th>小计</th>
                         </tr>
+                        @foreach($order as $row)
                         <tr>
-                        
-                            <td>{$vv->good->gname}</td>
-                            <td><img style='width:50px;' src="{:config('disp_path').$vv->good->gpic}" alt=""></td>
-                            <td>{$vv->good->price}</td>
-                            <td>{$v->cnt}</td>
-                            <td>{$v->total}</td>
-                            <tr>
-                                
-                           {/foreach}
-                           {/foreach}
+                            <td>{{$row->gname}}</td>
+                            <td><img style='width:50px;' src="{{$row->gpic}}" alt=""></td>
+                            <td>{{$row->price}}</td>
+                            <td>{{$row->cnt}}</td>
+                            <td>{{$row->price * $row->cnt}}</td>
+                            <!-- <td>
+                                <form action="/order/destroy/{{$row->gid}}" method="post">
+                                    {{csrf_field()}}
+                                    <button class="btn btn-success del" onclick="return confirm('确定要删除吗？');" >删除</button>
+                                </form>
+                            </td> -->
+                        <tr>
+                         @endforeach
                             <tr>
                                 <th></th>
                                 <td colspan="5">
-                                    <a href="/order/index"><input class="btn btn6" value="返回" type="button"></a>
+                                    <input class="btn btn6" onclick="history.go(-1)" value="返回" type="button">
                                 </td>
                             </tr>
                         </tbody>
@@ -46,4 +49,4 @@
 
     </div>
     <!--/main-->
-{/block}
+@endsection

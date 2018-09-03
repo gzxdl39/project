@@ -95,7 +95,7 @@
                 <li>
                     <a href="javascript:void()" class="aa"><i class="icon-font">&#xe003;</i>订单模块</a>
                     <ul class="sub-menu ab">
-                        <li><a href="/order/index"><i class="icon-font">&#xe005;</i>订单列表</a></li>
+                        <li><a href="/order"><i class="icon-font">&#xe005;</i>订单列表</a></li>
                       
                     </ul>
                 </li>

@@ -66,7 +66,7 @@ class AjaxController extends Controller
      */
     public function show($id,$status=2)
     {
-        //
+        //商品上架
         $info=DB::table("shop_goods")->where("gid","=",$id)->update(['status'=>$status]);
         if($info){
             return redirect("/shop")->with('success','商品上架成功');

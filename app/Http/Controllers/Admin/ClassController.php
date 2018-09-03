@@ -69,6 +69,8 @@ class ClassController extends Controller
     public function show($id)
     {
         //
+        $order=DB::select("select sd.gid,gname,gpic,sd.price,cnt from shop_details as sd,shop_goods as sg where sg.gid=sd.gid and sd.oid=".$id);
+        return view('Admin.order.edit',['order'=>$order]);
     }
 
     /**
@@ -102,6 +104,6 @@ class ClassController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }

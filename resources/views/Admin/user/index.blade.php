@@ -16,7 +16,7 @@
        <tbody>
         <tr> 
          <th>管理员名称:</th> 
-         <td><input class="common-text" placeholder="关键字" name="uname" value="{{$request['keywords'] or ''}}" id="uname" type="text" /></td> 
+         <td><input class="common-text" placeholder="关键字" name="uname" value="{{$k}}{{$request['keywords'] or ''}}" id="uname" type="text" /></td> 
          <td><input class="btn btn-primary btn2" value="查询" type="submit" /></td> 
         </tr> 
        </tbody>

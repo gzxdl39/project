@@ -67,13 +67,10 @@ class AdminController extends Controller
                         $nodelist[$v->controller][]="update";
                     }
                 }
-                // echo "<pre>";
-                // var_dump($nodelist);
-                // exit;
                 //3.把初始化的权限信息 放置在session里
                 session(['nodelist'=>$nodelist]);
                 //跳转到后台首页
-                return redirect("/index");
+                return redirect("/index")->with("success","登录成功");
             }else{
                 return redirect("/login")->with("error","账号或密码错误");
             }

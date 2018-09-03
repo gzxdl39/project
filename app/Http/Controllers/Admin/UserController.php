@@ -21,7 +21,7 @@ class UserController extends Controller
         //获取列表数据
         $user=DB::table("shop_users")->where("uname",'like',"%".$k."%")->paginate(5);
         //加载模板
-        return view('Admin.user.index',['user'=>$user,'request'=>$request->all()]);
+        return view('Admin.user.index',['user'=>$user,'request'=>$request->all(),'k'=>$k]);
     }
 
     /**
