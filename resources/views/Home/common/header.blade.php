@@ -5,6 +5,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" /> 
   <title>@yield('title')</title> 
   <link rel="stylesheet" type="text/css" href="/static/css/style.css" /> 
+  <link rel="stylesheet" type="text/css" href="/static/css/mainls.css" /> 
   <link rel="stylesheet" type="text/css" href="/static/css/lightbox.css" />
   <script src="/static/js/prototype.js" type="text/javascript"></script>
   <script src="/static/js/scriptaculous.js?load=effects" type="text/javascript"></script>
@@ -20,6 +21,7 @@
     </div> 
     <div id="menu"> 
      <ul> 
+      <li></li>
       <li class="selected"><a href="index.html">首页</a></li> 
       <li><a href="about.html">关于我们</a></li> 
       <li><a href="category.html">书籍</a></li> 

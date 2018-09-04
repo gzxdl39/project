@@ -11,7 +11,7 @@
                 <form action="/shop" method="post" id="myform" name="myform" enctype="multipart/form-data" >
                     <table class="insert-tab" width="100%">
                         <tbody><tr>
-                            <th width="120"><i class="require-red">*</i>商品分类：</th>
+                            <th width="140"><i class="require-red">*</i>商品分类：</th>
                             <td>
                                 <select name="cate_id" id="cate_id" class="required">
                                    <option value="0" selected="selected">请选择</option>
@@ -26,6 +26,13 @@
                                 <th><i class="require-red">*</i>商品名称：</th>
                                 <td>
                                     <input class="common-text required" id="gname" name="gname" size="50" value="" type="text">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>作者\时间\出版社：</th>
+                                <td>
+                                    <input class="common-text required" id="author" name="author" size="50" value="" type="text">
                                     <span></span>
                                 </td>
                             </tr>
@@ -120,7 +127,7 @@
                 $(this).addClass("cur");
                 SHOP=false;
             }else{
-              // Ajax检测用户名是否已经注册
+              // Ajax检测商品名是否已经注册
               $.get("/ajax/create/{m}",{m:m},function(data){
                 if(data==1){
                  o.next("span").css("color","red").html("商品名称已经存在");

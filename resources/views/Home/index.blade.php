@@ -1,7 +1,37 @@
 @extends('Home.common.base')
 @section('title','首页')
-@section('content')    
-        <div class="left_content"> 
+@section('content')  
+    <!-- 代码部分begin -->
+<div class="hc_lnav jslist">
+  <div class="allbtn">
+    <h2><a href="#"><strong>&nbsp;</strong>图书分类<i>&nbsp;</i></a></h2>
+    <ul style="width:190px" class="jspop box">
+      @foreach($user as $row)
+      <li class=a1>
+        <div class=tx><a href="#"><i>&nbsp;</i>{{$row->cname}}</a> </div>
+        <div class=pop>
+          <h3><a href="#"></a></h3>
+          <dl>
+            @foreach($row->sub as $ro)
+            <dl>
+              <dt style="color: red"><a href=""><span style="font-size: 15px;color: green;">{{$ro->cname}}</span></a></dt>
+              <dd>
+                @foreach($ro->sub as $r)
+                <a class="ui-link" href="#">{{$r->cname}}</a>
+                @endforeach 
+              </dd>
+            </dl>
+            @endforeach
+          <div class=clr></div>
+          <div class=act><a href=""></a> </div>
+        </div>
+      </li>
+      @endforeach
+    </ul>
+  </div>
+</div>
+<!-- 代码部分end -->
+      <div class="left_content"> 
      <div class="title">
       <span class="title_icon"><img src="/static/images/bullet1.gif" alt="" title="" /></span>特价书籍
      </div> 

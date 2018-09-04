@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Home;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use DB;
 
 class UserController extends Controller
 {
@@ -12,9 +13,21 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public static function getcatesbypid($pid){
+        $s=DB::table("shop_cate")->where('pid','=',$pid)->get();
+        $data=[];
+        //遍历
+        foreach($s as $key=>$value){
+            $value->sub=self::getcatesbypid($value->cid);
+            $data[]=$value;
+        }
+        return $data;
+    }
+
     public function index()
     {
-        return view("Home.index");
+        $user=self::getcatesbypid(0);
+        return view("Home.index",['user'=>$user]);
     }
 
     /**
