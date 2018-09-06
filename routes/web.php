@@ -64,5 +64,14 @@ Route::group(['middleware'=>'login'],function(){
 	Route::get('/ajax/edit/{m}','Admin\AjaxController@shop');
 });
 // Route::get('/info','Admin\RoleController@store');
-// Route::get('/sms','Admin\SmsController@index');
-// Route::get('/sms/create','Admin\SmsController@create');
+//测试短信验证
+Route::get('/sms','Admin\SmsController@index');
+Route::get('/sms/create/{p}','Admin\SmsController@create');
+Route::get('/sms/store/{code}','Admin\SmsController@store');
+
+
+// # 用户点击登录按钮时请求的地址
+// Route::get('/auth/oauth', 'Auth\AuthController@oauth');
+
+// # 微信接口回调地址
+// Route::get('/auth/callback', 'Auth\AuthController@callback');
