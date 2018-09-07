@@ -11,7 +11,7 @@
 |
 */
 //首页路由
-Route::get('/','Home\UserController@index');
+// Route::get('/','Home\UserController@index');
 //后台登录页面
 Route::get("/login","Admin\AdminController@create");
 //验证码
@@ -73,5 +73,83 @@ Route::get('/sms/store/{code}','Admin\SmsController@store');
 // # 用户点击登录按钮时请求的地址
 // Route::get('/auth/oauth', 'Auth\AuthController@oauth');
 
-// # 微信接口回调地址
+// # 接口回调地址
 // Route::get('/auth/callback', 'Auth\AuthController@callback');
+
+
+//前台的注册页面
+// Route::resource('/homeregister','Home\RegisterController');
+// Route::get("/forget","Home\HomeLoginController@forget");
+// Route::post("/doforget","Home\HomeLoginController@doforget");
+// //加载重置密码模板
+// Route::get("/reset","Home\HomeLoginController@reset");
+// Route::post("/doreset","Home\HomeLoginController@doreset");								
+// // Route::get("/send","Home\HomeLoginController@send");								
+
+// // 注册校验码检测
+// Route::get('/vcode','Home\RegisterController@vcode');
+// // 注册页面
+// Route::get('/homeregister','Home\RegisterController@index');
+// // ajax判断号码
+// Route::get('/homeregisters','Home\RegisterController@register');
+// //提交注册信息
+// Route::post('/register/s','Home\RegisterController@create');
+// // 个人设置页面
+// Route::get('/user/me/setting','Home\UserController@setting');
+// // 个人设置操作
+// Route::post('/user/me/setting','Home\UserController@settingStore');
+
+
+// //前台登录我的账号登录管理
+// Route::resource('/homelogin','Home\HomeLoginController');
+// // 中间限制登录
+// //首页路由
+Route::get('/','Home\UserController@index');
+//商品某一级下的列表页
+Route::get('/specials/{cid}','Home\UserController@create');
+//商品详情页
+Route::get('/details/{gid}','Home\UserController@show');
+//商品列表页
+Route::get('/list','Home\UserController@store');
+// //联系我们
+// Route::get('/contact','Home\ContactController@index');
+// // 我的账号Myaccount
+// Route::get('/myaccount','Home\MyaccountController@index');
+// //前台注册register已选书籍
+// Route::get('/register','Home\RegisterController@index');
+// // 前台的个人中心 
+// Route::get('/personal','Home\PersonalController@index');
+// Route::get('/city','Home\PersonalController@create');
+// //前台下单地址页面
+// Route::get('/homexiadan','Home\XiadanController@index');
+// // 前台的友情链接
+// Route::get('/lists','Home\ListsController@index');
+// // 前台的友情链接添加
+// Route::get('/addlists','Home\ListsController@store');
+
+// //前台的友情链接
+// Route::get('/lists','Home\ListsController@create');
+// //前台的使用Ajax检查网址名是否重复、
+// Route::get('/repeat/{m}','Home\RepeatController@create');
+// //前台检查网址是否重复
+// Route::get('/repeats/{mm}','Home\RepeatsController@index');
+// // 前台的添加信息
+// Route::get('/information','Home\InformationController@index');
+// Route::get('/information','Home\InformationController@create');
+
+
+
+
+
+
+
+
+// 后台模板
+//管理员模块
+// Route::resource("/user","Admin\UserController");
+// Route::resource("/cate","Admin\CateController");
+
+// //Ajax
+// Route::get('/ajax/{m}','Admin\AjaxController@index');
+// //后台友情链接
+// Route::resource('/listss','Admin\ListssController');

@@ -52,5 +52,5 @@
      </div> 
      <div class="clear"></div> 
     </div>
-@section('script')   
+   
 @endsection

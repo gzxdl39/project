@@ -6,7 +6,7 @@
      <div class="title">
       <span class="title_icon"><img src="/static/images/bullet1.gif" alt="" title="" /></span>书籍列表
      </div> 
-      @foreach($shoper as $res)
+      @foreach($shop as $res)
      <div class="feat_prod_box"> 
       <div class="prod_img">
        <a href="/details/{{$res->gid}}"><img src="{{$res->gpic}}" width="98px" height="150px" alt="" title="" border="0" /></a>
@@ -27,7 +27,23 @@
       <div class="clear"></div> 
      </div> 
       @endforeach
+      <div class="pagination" id="content"> 
+
+      {{$shop->appends($request)->render()}}
+     </div> 
      
+     <script>
+      window.onload = function(){
+     var content=document.getElementById("content"); 
+      var items=content.getElementsByTagName("ul"); 
+      var v=items[0].getElementsByTagName("li"); 
+      content.style.marginLeft = '20%';
+      for(var i = 0; i < v.length; i++){
+        v[i].style.float = 'left'; 
+      }
+      
+      } 
+     </script>
      <div class="clear"></div> 
     </div>  
 @endsection

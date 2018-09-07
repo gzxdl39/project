@@ -89,7 +89,7 @@
     </div>
     <!--end of right content--> 
     <div class="clear"></div> 
-   </div>
+  
    <!--end of center content--> 
    <div class="footer"> 
     <div class="left_footer">
@@ -99,6 +99,7 @@
     </div> 
     <div class="right_footer"> 
      <a href="#">首页</a> 
+     <a href="/lists">友情链接</a>
      <a href="#">关于我们</a> 
      <a href="#">服务</a> 
      <a href="#">隐私政策</a> 
@@ -107,5 +108,4 @@
    </div> 
   </div>  
  </body>
- @yield('script');
 </html>
