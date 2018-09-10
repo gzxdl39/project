@@ -1,33 +1,27 @@
 @extends('Home.common.base')
-@section('title','个人中心') 
+@section('title','密码找回') 
 @section('content')    
 <script type="text/javascript" src="/admin/js/libs/jquery-1.8.3.min.js"></script>
      <div class="center_content"> 
     <div class="left_content"> 
      <div class="title">
-      <span class="title_icon"><img src="/public/static/Home/images/bullet1.gif" alt="" title="" /></span>个人中心
+      <span class="title_icon"><img src="/public/static/Home/images/bullet1.gif" alt="" title="" /></span>密码找回
      </div> 
      <div class="feat_prod_box_details"> 
       <p class="details"> 描述 </p> 
       <div class="contact_form"> 
        <div class="form_subtitle">
-        个人信息
+        密码找回
        </div> 
-       <form action="/city/{{$data->id}}" method="post" id="myform" name="myform" enctype="multipart/form-data">
-        <div class="form_row"> 
-         <label class="contact"><strong>用户名:</strong></label> 
-         <input type="text" class="contact_input" name="name" value="{{$data->name}}" /><span></span>
-        </div> 
-        <div class="form_row"> 
-         <label class="contact"><strong>密码:</strong></label> 
-         <input type="password" class="contact_input" name="password" value="{{$data->password}}" /><span></span>
-        <div class="form_row"> 
-         <label class="contact"><strong>收货地址:</strong></label> 
-         <input type="text" class="contact_input" name="addr" value="{{$data->addr}}" /><span></span>
-        </div> 
+       <form action="/doforget" method="post" id="myform" name="myform" enctype="multipart/form-data">
+        @if(session('error'))    
+                <div class="mws-form-message error">
+                        {{session('error')}}
+                </div>
+                @endif
         <div class="form_row"> 
          <label class="contact"><strong>电话:</strong></label> 
-         <input type="text" class="contact_input" name="phone" value="{{$data->phone}}" /><span></span><div><span id="ss">
+         <input type="text" class="contact_input" name="phone" /> <span></span><div><span id="ss">
                 {{csrf_field()}}
                 <a href="javascript:void(0)"  class="btn btn-success" id="bb">单击发送</a>
         </span></div>     
@@ -38,7 +32,7 @@
         </div>
         <div class="form_row"> 
             {{csrf_field()}} 
-         <input type="submit" class="btn btn-primary" value="修改" /> 
+         <input type="submit" class="btn btn-primary" value="密码找回" /> 
         </div> 
        </form> 
       </div> 
@@ -46,57 +40,9 @@
      <div class="clear"></div> 
     </div>
     <script type="text/javascript">
-        NAME=false;
-        PASS=false;
-        TEL=false;
-        ADDR=false;
         flag=false;
-       //用户名
-       $("input[name='name']").blur(function(){
-        //$(this)在Ajax里解析不了
-        o=$(this);
-        //获取用户名
-        m=$(this).val();
-        //正则匹配
-        if(m.match(/^[a-zA-Z0-9_-]{4,16}$/)==null){
-          $(this).next("span").css("color","red").html("用户名必须为4-16位任意的数字字母下划线");
-          $(this).addClass("cur");
-          NAME=false;
-        }else{
-          //Ajax检测用户名是否已经注册
-          $.get("/homeregister/names/{m}",{m:m},function(data){
-            if(data==1){
-             o.next("span").css("color","red").html("用户名已经注册");
-             NAME=true;
-            }else{
-            o.next("span").css("color","green").html("用户名可用");
-            //清空样式
-            o.removeClass("cur");
-            //添加样式
-            o.addClass("curs");
-            NAME=true;
-            }
-          });
-        }
-       });
-        //密码
-       $("input[name='password']").blur(function(){
-          //获取密码
-          p=$(this).val();
-          if(p.match(/\w{4,8}/)==null){
-            $(this).next("span").css("color","red").html("密码必须为4-8位任意的数字字母下划线");
-            $(this).addClass("cur");
-            PASS=false;
-          }else{
-            $(this).next("span").css("color","green").html("密码可用");
-            //清空样式
-            $(this).removeClass("cur");
-            //添加样式
-            $(this).addClass("curs");
-            PASS=true;
-          }
-       });
-        //电话
+        TEL=false;
+         //电话
        $("input[name='phone']").blur(function(){
           o=$(this);
           //获取电话
@@ -113,25 +59,7 @@
                 o.addClass("curs");
                 TEL=true;
             }
-          });
-        //地址
-       $("input[name='addr']").blur(function(){
-          //获取地址
-          p=$(this).val();
-            if(p.match(/^[\u4e00-\u9fa5_a-zA-Z0-9]+$/)==null){
-                $(this).next("span").css("color","red").html("请输入正确收货地址");
-                $(this).addClass("cur");
-                ADDR=false;
-            }else{
-                $(this).next("span").css("color","green").html("收货地址正确");
-                //清空样式
-                $(this).removeClass("cur");
-                //添加样式
-                $(this).addClass("curs");
-                ADDR=true;
-            }
-       });
-       // 获取按钮 绑定单击事件
+        // 获取按钮 绑定单击事件
           $("#bb").click(function(){
               o=$(this);
               p=$("input[name='phone']").val();
@@ -162,6 +90,7 @@
                       },1000);
                   }
               },'json');
+          });
         });
         //输入校验码
         $("input[name='code']").blur(function(){
@@ -189,7 +118,7 @@
         $("#myform").submit(function(){
         //在每个匹配的元素上触发某类事件
             $("input").trigger("blur");
-            if(NAME && PASS && TEL && ADDR && flag){
+            if(TEL && flag){
                 //提交表单
                 return true;
             }else{

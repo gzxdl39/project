@@ -77,32 +77,6 @@ Route::get('/sms/store/{code}','Admin\SmsController@store');
 // Route::get('/auth/callback', 'Auth\AuthController@callback');
 
 
-//前台的注册页面
-// Route::resource('/homeregister','Home\RegisterController');
-// Route::get("/forget","Home\HomeLoginController@forget");
-// Route::post("/doforget","Home\HomeLoginController@doforget");
-// //加载重置密码模板
-// Route::get("/reset","Home\HomeLoginController@reset");
-// Route::post("/doreset","Home\HomeLoginController@doreset");								
-// // Route::get("/send","Home\HomeLoginController@send");								
-
-// // 注册校验码检测
-// Route::get('/vcode','Home\RegisterController@vcode');
-// // 注册页面
-// Route::get('/homeregister','Home\RegisterController@index');
-// // ajax判断号码
-// Route::get('/homeregisters','Home\RegisterController@register');
-// //提交注册信息
-// Route::post('/register/s','Home\RegisterController@create');
-// // 个人设置页面
-// Route::get('/user/me/setting','Home\UserController@setting');
-// // 个人设置操作
-// Route::post('/user/me/setting','Home\UserController@settingStore');
-
-
-// //前台登录我的账号登录管理
-// Route::resource('/homelogin','Home\HomeLoginController');
-// // 中间限制登录
 // //首页路由
 Route::get('/','Home\UserController@index');
 //商品某一级下的列表页
@@ -111,15 +85,38 @@ Route::get('/specials/{cid}','Home\UserController@create');
 Route::get('/details/{gid}','Home\UserController@show');
 //商品列表页
 Route::get('/list','Home\UserController@store');
-// //联系我们
-// Route::get('/contact','Home\ContactController@index');
+//前台的注册页面
+Route::get('/homeregister','Home\RegisterController@index');
+//Ajax电话检测
+Route::get('/homeregister/register/{p}','Home\RegisterController@register');
+//ajax用户名检测
+Route::get('/homeregister/names/{m}','Home\RegisterController@names');
+//前台注册添加
+Route::post('/homeregister/create','Home\RegisterController@create');
+//加载手机号码验证模板
+Route::get("/forget","Home\HomeLoginController@forget");
+//验证是否存在该号码
+Route::post("/doforget","Home\HomeLoginController@doforget");	
+//加载修改密码模板							
+Route::get("/reset","Home\HomeLoginController@reset");	
+//执行密码修改操作
+Route::post("/doreset","Home\HomeLoginController@doreset");	
+//前台登录
+Route::resource('/homelogin','Home\HomeLoginController');
+//退出登录
+Route::resource('/homelogin','Home\HomeLoginController');
+//前台的个人中心 
+Route::get('/personal','Home\PersonalController@index');
+//修改个人信息
+Route::post('/city/{id}','Home\PersonalController@update');
+
+//联系我们
+Route::get('/contact','Home\ContactController@index');
 // // 我的账号Myaccount
 // Route::get('/myaccount','Home\MyaccountController@index');
 // //前台注册register已选书籍
 // Route::get('/register','Home\RegisterController@index');
-// // 前台的个人中心 
-// Route::get('/personal','Home\PersonalController@index');
-// Route::get('/city','Home\PersonalController@create');
+
 // //前台下单地址页面
 // Route::get('/homexiadan','Home\XiadanController@index');
 // // 前台的友情链接

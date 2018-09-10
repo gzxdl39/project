@@ -8,18 +8,19 @@ class PersonalController extends Controller
 {
    
    public function index(Request $request){
+    //获取name
+    $name=session('name');
+    // 获取数据
+    $data=DB::table('home_user')->where('name','=',$name)->first();
      //视图
-   	return view('Home.personal');
+   	return view('Home.personal',['data'=>$data]);
    }
-   // 加载模板数据
-   public function create(Request $request){
-   	//获取upid
-	$upid=$_GET['upid'];
-	// 封装数据
-	$data=$request->only(['name','level','upid']);
-	// 获取数据
-	$data=DB::table('home_csjl')->where('upid','=',$upid)->get();
-	//返回数据
-    return $data;
+
+   public function update(Request $request,$id)
+   {
+    //添加数据
+    $data=$request->except(['code','_token']);
+    $date=DB::table('home_user')->where('id','=',$id)->update($data);
+    return redirect("/personal");
    }
 }

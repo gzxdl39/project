@@ -28,7 +28,6 @@
      </div> 
       @endforeach
       <div class="pagination" id="content"> 
-
       {{$shop->appends($request)->render()}}
      </div> 
      

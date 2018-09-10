@@ -16,15 +16,27 @@ class RegisterController extends Controller
     // 加载前台注册模板
     public function index(Request $request)
     {
-      return view('Home.Register.register');
+      return view('Home.register');
     }
 
-       //注册页面行为
-      public function register(Request $request){     
+    //Ajax判断电话是否存在
+    public function register(Request $request){     
         //获取参数p
         $p=$_GET['p'];
         // 数据库的数据
         $data=DB::table('home_user')->where('phone','=',$p)->first();
+        // 判断数据
+        if($data){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+
+    //Ajax判断用户名是否存在
+    public function names(Request $request){     
+        // 数据库的数据
+        $data=DB::table('home_user')->where('name','=',$_GET['m'])->first();
         // 判断数据
         if($data){
             return 1;
@@ -38,29 +50,16 @@ class RegisterController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request){
-        //获取输入的校验码
-        $code=$request->input("code");
-        // 把闪存的参数写入到
-        $request->flash();
-        //获取系统的校验码
-        $vcode=session('vcode');
-         // 判断校验码的值是否一致
-        if($code!=$vcode){
-            return back()->with('error','输入的校验码有误');
+       //添加数据
+        $data=$request->except(['terms','_token','repassword','code']);
+        //对密码做加密
+        $data['password']=Hash::make($data['password']);
+        if(DB::table("home_user")->insert($data)){
+            return redirect("/homelogin")->with('success','注册成功');
         }else{
-            //封装需要注册的数据
-            $data=$request->only(['phone','password','name','atime']);
-            // 哈希值
-            $data['password']=Hash::make($request->input('password'));
-            // 数据库
-            $id=DB::table("home_user")->insertGetId($data);
-            //执行插入
-            if($id){
-            // 跳转
-            return redirect("/homelogin")->with('success','成功');
-            }
+            return redirect("/homeregister")->with('error','注册失败');
         }
- } 
+    } 
 
        
 

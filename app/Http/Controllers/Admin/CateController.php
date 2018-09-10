@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redis;
 use DB;
 
 class CateController extends Controller
@@ -27,21 +28,15 @@ class CateController extends Controller
     public function index(Request $request)
     {
         // //获取列表数据
-        // $k=$request->input('cname');
-        $user=self::getcatesbypid(0);
-        // //查询
-        // $user=DB::table("shop_cate")->select(DB::raw('*,concat(path,cid)as paths'))->orderBy('paths')->where('cname','like',"%".$k."%")->get();
-        //  foreach($user as $key=>$value){
-        //     //获取path
-        //     $path=$value->path;
-        //     // echo $path."<br>";
-        //     //转换为数组
-        //     $arr=explode(",",$path);
-        //     //获取逗号个数
-        //     $len=count($arr)-1;
-        //     //加分隔符 str_repeat 重复字符串函数
-        //     $user[$key]->cname=str_repeat("--|",$len).$value->cname;
-        // }
+        // $user=self::getcatesbypid(0);
+        $v=Redis::get('user_key');
+        if($v!=null){
+            $user=json_decode($v);
+        }else{
+            $user=self::getCatesbypid(0);
+            $r=json_encode($user);
+            Redis::set('user_key',$r);
+        }
         //加载页面
         return view('Admin.cate.index',['user'=>$user,'request'=>$request->all()]);
     }

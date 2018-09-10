@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Home;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redis;
 use DB;
 
 class UserController extends Controller
@@ -26,13 +27,20 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-            //获取搜索关键词
-            $k=$request->input('gname');
+        //获取搜索关键词
+        $k=$request->input('gname');
+        $v=Redis::get('user_key');
+        if($v!=null){
+            $user=json_decode($v);
+        }else{
             $user=self::getCatesbypid(0);
-            //获取前2条数据
-            $data=DB::table("shop_goods")->where("gname",'like',"%".$k."%")->paginate(2);
-            //首页方法
-            return view("Home.index",['user'=>$user,'data'=>$data,'request'=>$request->all()]);
+            $r=json_encode($user);
+            Redis::set('user_key',$r);
+        }
+        //获取前2条数据
+        $data=DB::table("shop_goods")->where("gname",'like',"%".$k."%")->paginate(2);
+        //首页方法
+        return view("Home.index",['user'=>$user,'data'=>$data,'request'=>$request->all()]);
        
     }
     
@@ -58,8 +66,18 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //获取商品列表
-        $shop=DB::table('shop_goods')->select()->paginate(6);
+        //获取商品列表 
+        $v=Redis::get('list_key');
+        // if($v!=null){
+        //     $shop=json_decode($v);
+        // }else{
+            $shop=DB::table('shop_goods')->select()->paginate(6);
+            // $r=json_encode($shop);
+            // Redis::set('list_key',$r);
+        // }
+            // echo "<pre>";
+            // var_dump($shop);
+            // exit;
         return view("Home.special",['shop'=>$shop,'request'=>$request->all()]);
 
     }
