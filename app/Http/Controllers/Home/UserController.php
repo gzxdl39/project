@@ -39,9 +39,9 @@ class UserController extends Controller
         }
         //获取前2条数据
         $data=DB::table("shop_goods")->where("gname",'like',"%".$k."%")->paginate(2);
+        $movie=movie();
         //首页方法
-        return view("Home.index",['user'=>$user,'data'=>$data,'request'=>$request->all()]);
-       
+        return view("Home.index",['user'=>$user,'data'=>$data,'movie'=>$movie,'request'=>$request->all()]);
     }
     
     /**
@@ -54,8 +54,9 @@ class UserController extends Controller
         $crea=self::getCatesBypid(0);
         //获取商品某一级下的列表数据
          $shoper=DB::select("select * from shop_goods as sg,shop_cate as sc where sg.cate_id=sc.cid and sc.cid=".$gid);
+         $movie=movie();
         //加载模板 分配数据
-        return view("Home.specials",['shoper'=>$shoper,'crea'=>$crea]);
+        return view("Home.specials",['shoper'=>$shoper,'crea'=>$crea,'movie'=>$movie]);
     }
 
     /**
@@ -68,17 +69,9 @@ class UserController extends Controller
     {
         //获取商品列表 
         $v=Redis::get('list_key');
-        // if($v!=null){
-        //     $shop=json_decode($v);
-        // }else{
-            $shop=DB::table('shop_goods')->select()->paginate(6);
-            // $r=json_encode($shop);
-            // Redis::set('list_key',$r);
-        // }
-            // echo "<pre>";
-            // var_dump($shop);
-            // exit;
-        return view("Home.special",['shop'=>$shop,'request'=>$request->all()]);
+        $shop=DB::table('shop_goods')->select()->paginate(6);
+        $movie=movie();
+        return view("Home.special",['shop'=>$shop,'movie'=>$movie,'request'=>$request->all()]);
 
     }
 
@@ -95,8 +88,9 @@ class UserController extends Controller
         $descr=DB::table("shop_goods")->where("gid",'=',$gid)->first();
         //获取商品在同一级下的
         $cate=DB::table("shop_goods")->where("cate_id","=",$descr->cate_id)->get();
+        $movie=movie();
         //加载模板 分配数据
-        return view("Home.details",['descr'=>$descr,'cate'=>$cate]);
+        return view("Home.details",['descr'=>$descr,'cate'=>$cate,'movie'=>$movie]);
        
     }
 

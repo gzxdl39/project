@@ -50,6 +50,7 @@
          <th>收货地址</th> 
          <th>总数量</th> 
          <th>状态</th> 
+         <th>支付状态</th>
          <th>操作</th> 
         </tr> 
         @foreach($order as $row)
@@ -59,7 +60,7 @@
          <td>{{$row->create_at}}</td> 
          <td>{{$row->rec}}</td> 
          <td>{{$row->addr}}</td> 
-         <td>{{$row->cnt}}</td> 
+         <td>{{$row->num}}</td> 
          <td>
            @if($row->status==1)
            已下单
@@ -69,6 +70,14 @@
            @endif
            @if($row->status==3)
            已收货
+           @endif
+         </td> 
+         <td>
+           @if($row->ctime==null)
+           未支付
+           @endif
+           @if($row->ctime!=null)
+           已支付
            @endif
          </td> 
          <td> 

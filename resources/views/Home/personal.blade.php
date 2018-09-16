@@ -7,6 +7,9 @@
      <div class="title">
       <span class="title_icon"><img src="/public/static/Home/images/bullet1.gif" alt="" title="" /></span>个人中心
      </div> 
+      <div class="title">
+      <a href="/management">订单管理</a>
+     </div> 
      <div class="feat_prod_box_details"> 
       <p class="details"> 描述 </p> 
       <div class="contact_form"> 

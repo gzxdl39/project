@@ -17,18 +17,28 @@
       <div class="title">
        <span class="title_icon"><img src="/static/images/cart.gif" alt="" title="" /></span>我的书籍
       </div> 
-      <div class="home_cart_content">
-        项目 | 
-       <span class="red">共计: 100$</span> 
-      </div> 
      </div> 
      <div class="title">
       <span class="title_icon"><img src="/static/images/bullet3.gif" alt="" title="" /></span>关于我们
      </div> 
      <div class="about"> 
-      <p> <img src="/static/images/about.gif" alt="" title="" class="right" /> 描述 </p> 
+      <p> <img src="/static/images/about.gif" alt="" title="" class="right" />春日去而复来，羞涩得到释放，
+
+      有人收获了温润的唇，整颗心都被一个名字入侵。
+
+      确凿的爱，会为心有所属的人，积蓄强力。
+
+      假若真爱迟迟未来，也不必着急。
+
+      懂得爱的人会先懂得取悦自己，
+
+      王尔德曾说“爱自己是终身浪漫的开始”。
+
+      方所情人节精选：不确定的年代，确定的你
+
+      一份贴近内心的礼物，让爱情有迹可循。</p> 
      </div> 
-     <div class="right_box"> 
+<!--      <div class="right_box"> 
       <div class="title">
        <span class="title_icon"><img src="/static/images/bullet4.gif" alt="" title="" /></span>促销
       </div> 
@@ -53,37 +63,17 @@
         <a href="details.html"><img src="/static/images/thumb3.gif" alt="" title="" class="thumb" border="0" /></a> 
        </div> 
       </div> 
-     </div> 
+     </div>  -->
      <div class="right_box"> 
       <div class="title">
-       <span class="title_icon"><img src="/static/images/bullet5.gif" alt="" title="" /></span>类别
       </div> 
-      <ul class="list"> 
-       <li><a href="#">图书礼品</a></li> 
-       <li><a href="#">图书礼品</a></li> 
-       <li><a href="#">图书礼品</a></li> 
-       <li><a href="#">图书礼品</a></li> 
-       <li><a href="#">图书礼品</a></li> 
-       <li><a href="#">图书礼品</a></li> 
-       <li><a href="#">图书礼品</a></li> 
-       <li><a href="#">图书礼品</a></li> 
-       <li><a href="#">图书礼品</a></li> 
-       <li><a href="#">图书礼品</a></li> 
-       <li><a href="#">图书礼品</a></li> 
-      </ul> 
       <div class="title">
-       <span class="title_icon"><img src="/static/images/bullet6.gif" alt="" title="" /></span>合作伙伴
+       <span class="title_icon"><img src="/static/images/bullet6.gif" alt="" title="" /></span>友情链接
       </div> 
       <ul class="list"> 
-       <li><a href="#">网站</a></li> 
-       <li><a href="#">网站</a></li> 
-       <li><a href="#">网站</a></li> 
-       <li><a href="#">网站</a></li> 
-       <li><a href="#">网站</a></li> 
-       <li><a href="#">网站</a></li> 
-       <li><a href="#">网站</a></li> 
-       <li><a href="#">网站</a></li> 
-       <li><a href="#">网站</a></li> 
+        @foreach($movie as $row)
+       <li><a href="{{$row->url}}">{{$row->title}}</a></li> 
+       @endforeach
       </ul> 
      </div> 
     </div>

@@ -5,19 +5,25 @@ namespace App\Http\Controllers\Home;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
-use hash;
 
-class ListsController extends Controller
+class PayController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $movie=movie();
-        return view("Home.Lists.lists",['movie'=>$movie]);
+        // 获取订单号
+        $oid=session('pay'); //单号
+        // 获取商品总价
+        // $total=session('total'); //总价
+        // 清除session
+        $request->session()->forget('pay');
+        // $request->session()->forget('total');
+        // 调用支付宝接口
+        pay($oid);
     }
 
     /**
@@ -25,13 +31,10 @@ class ListsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create($oid)
     {
-        //友情链接
-        $list=DB::table("home_lists")->where('status','=',2)->get();
-        $movie=movie();
-        return view("Home.Lists.lists",['list'=>$list,'movie'=>$movie]);
-
+        //
+        pay($oid);
     }
 
     /**
@@ -42,17 +45,15 @@ class ListsController extends Controller
      */
     public function store(Request $request)
     {
-        //友情链接添加方法
-        $data=$request->all();
-        $data=$request->except('_token');
-        $data['status']=1;
-        //把添加的数据插入数据库
-        $add=DB::table('home_lists')->insert($data);
-        //判断 匹配成功就插入数据库  失败则返回页面
-        if($add){
-            return redirect("/lists")->with('success','提交成功');
+        //获取订单号
+        $into=$request->only('out_trade_no');
+        // 写入支付时间
+        $data['ctime']=date('Y-m-d H:i:s');
+        $info=DB::table('shop_orders')->where('oid','=',$into)->update($data);
+        if($info){
+            return redirect('/');
         }else{
-            return redirect("/lists")->with('error','提交失败');
+            return redirect('/');
         }
     }
 
@@ -62,9 +63,9 @@ class ListsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
-    {    
-
+    public function show($id)
+    {
+        //
     }
 
     /**

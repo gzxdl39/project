@@ -25,14 +25,8 @@
                             <td>{{$row->gname}}</td>
                             <td><img style='width:50px;' src="{{$row->gpic}}" alt=""></td>
                             <td>{{$row->price}}</td>
-                            <td>{{$row->cnt}}</td>
-                            <td>{{$row->price * $row->cnt}}</td>
-                            <!-- <td>
-                                <form action="/order/destroy/{{$row->gid}}" method="post">
-                                    {{csrf_field()}}
-                                    <button class="btn btn-success del" onclick="return confirm('确定要删除吗？');" >删除</button>
-                                </form>
-                            </td> -->
+                            <td>{{$row->num}}</td>
+                            <td>{{$row->price * $row->num}}</td>
                         <tr>
                          @endforeach
                             <tr>

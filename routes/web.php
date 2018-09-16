@@ -10,8 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-//首页路由
-// Route::get('/','Home\UserController@index');
 //后台登录页面
 Route::get("/login","Admin\AdminController@create");
 //验证码
@@ -47,6 +45,8 @@ Route::group(['middleware'=>'login'],function(){
 	Route::resource("/shop","Admin\ShopController");
 	//商品上架
 	Route::get('/shop/up/{id}','Admin\AjaxController@show');
+	//商品下架
+	Route::get('/shop/down/{id}','Admin\AjaxController@down');
 
 	// 订单管理
 	Route::resource("/order","Admin\OrderController");
@@ -62,6 +62,14 @@ Route::group(['middleware'=>'login'],function(){
 	Route::get('/ajax/store/{m}','Admin\AjaxController@store');
 	//判断二级分类是否重复
 	Route::get('/ajax/edit/{m}','Admin\AjaxController@shop');
+	//后台友情链接
+	Route::resource('/listss','Admin\ListssController');
+	//会员管理模块
+	Route::resource("/member","Admin\MemberController");
+	//留言管理模块
+	Route::resource("/contacts","Admin\ContactsController");
+	//公告管理模块
+	Route::resource("/notices","Admin\NoticesController");
 });
 // Route::get('/info','Admin\RoleController@store');
 //测试短信验证
@@ -77,7 +85,7 @@ Route::get('/sms/store/{code}','Admin\SmsController@store');
 // Route::get('/auth/callback', 'Auth\AuthController@callback');
 
 
-// //首页路由
+//首页路由
 Route::get('/','Home\UserController@index');
 //商品某一级下的列表页
 Route::get('/specials/{cid}','Home\UserController@create');
@@ -85,6 +93,7 @@ Route::get('/specials/{cid}','Home\UserController@create');
 Route::get('/details/{gid}','Home\UserController@show');
 //商品列表页
 Route::get('/list','Home\UserController@store');
+
 //前台的注册页面
 Route::get('/homeregister','Home\RegisterController@index');
 //Ajax电话检测
@@ -105,48 +114,53 @@ Route::post("/doreset","Home\HomeLoginController@doreset");
 Route::resource('/homelogin','Home\HomeLoginController');
 //退出登录
 Route::resource('/homelogin','Home\HomeLoginController');
+
+//前台登录中间件
+Route::group(['middleware'=>'hone'],function(){
 //前台的个人中心 
 Route::get('/personal','Home\PersonalController@index');
 //修改个人信息
 Route::post('/city/{id}','Home\PersonalController@update');
 
-//联系我们
+// 前台的友情链接
+Route::get('/lists','Home\ListsController@index');
+// 前台的友情链接添加
+Route::post('/addlists','Home\ListsController@store');
+//前台的使用Ajax检查网址名是否重复、
+Route::get('/repeat/{m}','Home\RepeatController@create');
+//前台检查网址是否重复
+Route::get('/repeats/{mm}','Home\RepeatController@index');
+
+//前台留言页面
 Route::get('/contact','Home\ContactController@index');
-// // 我的账号Myaccount
-// Route::get('/myaccount','Home\MyaccountController@index');
-// //前台注册register已选书籍
-// Route::get('/register','Home\RegisterController@index');
+//前台留言添加
+Route::post('/contact/create','Home\ContactController@create');
 
-// //前台下单地址页面
-// Route::get('/homexiadan','Home\XiadanController@index');
-// // 前台的友情链接
-// Route::get('/lists','Home\ListsController@index');
-// // 前台的友情链接添加
-// Route::get('/addlists','Home\ListsController@store');
+//前台公告
+Route::get('/about','Home\ContactController@store');
 
-// //前台的友情链接
-// Route::get('/lists','Home\ListsController@create');
-// //前台的使用Ajax检查网址名是否重复、
-// Route::get('/repeat/{m}','Home\RepeatController@create');
-// //前台检查网址是否重复
-// Route::get('/repeats/{mm}','Home\RepeatsController@index');
-// // 前台的添加信息
-// Route::get('/information','Home\InformationController@index');
-// Route::get('/information','Home\InformationController@create');
-
-
-
-
-
-
-
-
-// 后台模板
-//管理员模块
-// Route::resource("/user","Admin\UserController");
-// Route::resource("/cate","Admin\CateController");
-
-// //Ajax
-// Route::get('/ajax/{m}','Admin\AjaxController@index');
-// //后台友情链接
-// Route::resource('/listss','Admin\ListssController');
+//我的购物车路由
+Route::resource('/cart','Home\CartController');
+//购物商品减
+Route::get("/upda/{id}","Home\CartController@updatee");
+//购物商品加
+Route::get("/updates/{id}","Home\CartController@updates");
+//购物车商品删除
+Route::get("/cartdel/{id}","Home\CartController@del");
+//收货地址
+Route::get("/orders","Home\OrderController@index");
+//生成订单
+Route::resource("/desktop","Home\DesktopController");
+//支付测试
+Route::get("/pay","Home\PayController@index");
+//支付测试2
+Route::get("/payup/{oid}","Home\PayController@create");
+//写入订单
+Route::get("/payout","Home\PayController@store");
+//订单管理页面
+Route::get('/management','Home\ManagementController@index');
+//订单详情页面
+Route::get('/orderdetails/{oid}','Home\OrderDetailsController@index');
+//确认收货
+Route::get('/take/{oid}','Home\ManagementController@create');
+});

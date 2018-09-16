@@ -32,8 +32,9 @@ class HomeLoginController extends Controller
         if(session('name')){
             return redirect('/personal');
         }else{
+            $movie=movie();
             // 视图模块
-            return view('Home.myaccount');
+            return view('Home.myaccount',['movie'=>$movie]);
         }
     }
 
@@ -68,8 +69,9 @@ class HomeLoginController extends Controller
 
     // 加载忘记密码
      public function forget(){
+        $movie=movie();
         //加载模板
-        return view("Home.forge");
+        return view("Home.forge",['movie'=>$movie]);
     }
 
     //找回密码
@@ -86,7 +88,8 @@ class HomeLoginController extends Controller
     }
     //加载密码重置模板
     public function reset(Request $request){
-        return view("Home.reset");
+        $movie=movie();
+        return view("Home.reset",['movie'=>$movie]);
     }
 
     // 执行密码重置操作

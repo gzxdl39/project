@@ -26,13 +26,14 @@
     "autoload": {
         "classmap": [
             "database/seeds",
-            "database/factories"
+            "database/factories",
+            "app/Library/"
         ],
         "psr-4": {
             "App\\": "app/"
         },
         "files":[
-            "app/Library/A.php",
+            "app/Library/movie.php",
             "app/Library/helper.php",
             "app/Library/Ucpaas.php"
         ]

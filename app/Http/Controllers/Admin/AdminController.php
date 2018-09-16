@@ -48,7 +48,7 @@ class AdminController extends Controller
             //检测密码
             if(Hash::check($request->input('upwd'),$user->upwd)){
                 //把登录用户名写入session
-                session(['name'=>$user->uname]);
+                session(['uname'=>$user->uname]);
                 //1.获取当前登录用户所有的权限信息 node表信息 控制器名字 方法名字
                 $list=DB::select("select power,controller,method from point as p,node as n where p.nid=n.id and rid={$user->uid}");
                 //2.权限初始化 让所有管理员具有后台首页访问权限
@@ -123,7 +123,7 @@ class AdminController extends Controller
     public function destroy(Request $request)
     {
         //退出销毁session
-        $request->session()->pull("name");
+        $request->session()->pull("uname");
         return redirect("/login");
     }
 }

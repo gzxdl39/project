@@ -1,17 +1,20 @@
 @extends('Home.common.base')
 @section('title','书籍详情') 
-@section('content')    
+@section('content')
+ <script type="text/javascript" src="/admin/js/libs/jquery-1.8.3.min.js"></script>
+<form action="/cart" method="post" id="sub">     
   <div class="left_content"> 
    <div class="crumb_nav"> 
-    <a href="index.html">首页</a> &gt;&gt; 书籍详情 
+    <a href="/">首页</a> &gt;&gt; 书籍详情 
    </div> 
    <div class="title">
-    <span class="title_icon"><img src="/static/images/bullet1.gif" alt="" title="" /></span>解忧杂货店
+    <span class="title_icon"><img src="/static/images/bullet1.gif" alt="" title="" /></span>{{$descr->gname}}
    </div>
    <div class="feat_prod_box_details"> 
     <div class="prod_img">
-     <a href="details.html"><img src="{{$descr->gpic}}" width="98px" height="150px" alt="" title="" border="0" /></a> 
+     <a href="#"><img src="{{$descr->gpic}}" width="98px" height="150px" alt="" title="" border="0" /></a>
      <br />
+     {{csrf_field()}}
      <br /> 
      <a href="{{$descr->gpic}}" rel="lightbox"><img src="/static/images/zoom.gif" alt="" title="" border="0" /></a>
        <a href=""><img src="" alt="" title="" border="0" /></a>  
@@ -26,7 +29,13 @@
       <p class="details">{{$descr->gdesc}}</p> 
       <div class="price">
        <strong>价格:</strong> 
-       <span class="red">{{$descr->price}}</span>
+       <span class="red">{{$descr->price}}</span><br>
+       <strong>库存:</strong> 
+       @if($descr->stock <=0)
+        <span style="background: pink">亲！该商品已下架了喔,留下您的联系方式。有货的时候再通知你哈*-*。</span>   
+       @else
+      <span class="red">{{$descr->stock}}</span>
+       @endif
       </div> 
       <div class="price">
        <strong>封面颜色:</strong> 
@@ -34,11 +43,20 @@
        <span class="colors"><img src="/static/images/color2.gif" alt="" title="" border="0" /></span> 
        <span class="colors"><img src="/static/images/color3.gif" alt="" title="" border="0" /></span> 
       </div> 
-      <a href="/cart" class="more"><img src="/static/images/order_now.gif" alt="" title="" border="0" /></a> 
+      <div class="price">
+       <strong>数量:</strong>    
+       <input type="text" style="width:30px;" name="num" value="1" id="nn"><span></span>
+      </div>
+       {{csrf_field()}}
+      <input type="hidden" name="id" value="{{$descr->gid}}">
+      @if($descr->stock <=0)
+      <h4><input type="text" value="无法加入购物车" readonly="readonly" style="background: pink"></h4> 
+      @else
+     <h4><input type="submit" value="加入购物车"></h4>
+      @endif
       <div class="clear"></div>
       <div class="clear"></div>  
      </div> 
-   
      <div class="box_bottom"></div> 
     </div> 
     <div class="clear"></div> 
@@ -80,11 +98,38 @@
    </div> 
    <div class="clear"></div> 
   </div>
+  </form>
  <script type="text/javascript">
+      NUM=false;
+      //绑定数量input的单击事件  
+      $("#nn").blur(function(){
+          o=$(this).val();
+          //判断值是否购买超过库存
+          if(o>{{$descr->stock}}){
+             $(this).next('span').css("color","red").html('亲，购买已超该产品库存咯^-^'); 
+             NUM=false;
+          }else if(o=={{$descr->stock}}){
+             $(this).next('span').css("color","pink").html('哇！亲好爱你哦！')
+             NUM=true;
+          }else{
+             $(this).next('span').css("color","green").html('亲，库存丰厚还可以购买哦^-^'); 
+             NUM=true;
+          }
+      });
+      //给表单绑定提交事件
+      $('#sub').submit(function(){
+        $("input").trigger('blur');
+        if(NUM==true){
+          return true;
+        }else{
+          return false;
+        }
+      });
 
-var tabber1 = new Yetii({
-id: 'demo'
-});
+
+    var tabber1 = new Yetii({
+    id: 'demo'
+    });
 
 </script>
 @endsection

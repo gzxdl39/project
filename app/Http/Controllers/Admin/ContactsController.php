@@ -1,23 +1,27 @@
 <?php
 
-namespace App\Http\Controllers\Home;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
-use hash;
+use Hash;
 
-class ListsController extends Controller
+class ContactsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $movie=movie();
-        return view("Home.Lists.lists",['movie'=>$movie]);
+        //获取搜索关键词
+        $k=$request->input('name');
+        //获取列表数据
+        $user=DB::table("home_message")->where("name",'like',"%".$k."%")->paginate(5);
+        //加载模板
+        return view('Admin.about.index',['user'=>$user,'request'=>$request->all()]);
     }
 
     /**
@@ -25,12 +29,8 @@ class ListsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        //友情链接
-        $list=DB::table("home_lists")->where('status','=',2)->get();
-        $movie=movie();
-        return view("Home.Lists.lists",['list'=>$list,'movie'=>$movie]);
 
     }
 
@@ -42,18 +42,7 @@ class ListsController extends Controller
      */
     public function store(Request $request)
     {
-        //友情链接添加方法
-        $data=$request->all();
-        $data=$request->except('_token');
-        $data['status']=1;
-        //把添加的数据插入数据库
-        $add=DB::table('home_lists')->insert($data);
-        //判断 匹配成功就插入数据库  失败则返回页面
-        if($add){
-            return redirect("/lists")->with('success','提交成功');
-        }else{
-            return redirect("/lists")->with('error','提交失败');
-        }
+        
     }
 
     /**
@@ -62,9 +51,9 @@ class ListsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
-    {    
-
+    public function show($id)
+    {
+        //
     }
 
     /**
@@ -75,7 +64,7 @@ class ListsController extends Controller
      */
     public function edit($id)
     {
-        //
+         
     }
 
     /**
@@ -87,7 +76,7 @@ class ListsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
     }
 
     /**
@@ -98,6 +87,11 @@ class ListsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //删除数据
+        if(DB::table("home_message")->where("id",'=',$id)->delete()){
+            return redirect("/contacts")->with('success','数据删除成功');
+        }else{
+            return redirect("/contacts")->with('error','数据删除失败');
+        }
     }
 }

@@ -12,8 +12,9 @@ class PersonalController extends Controller
     $name=session('name');
     // 获取数据
     $data=DB::table('home_user')->where('name','=',$name)->first();
+    $movie=movie();
      //视图
-   	return view('Home.personal',['data'=>$data]);
+   	return view('Home.personal',['data'=>$data,'movie'=>$movie]);
    }
 
    public function update(Request $request,$id)

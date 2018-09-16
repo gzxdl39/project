@@ -49,13 +49,13 @@
         <div class="topbar-logo-wrap clearfix">
             <h1 class="topbar-logo none"><a href="index.html" class="navbar-brand">后台管理</a></h1>
             <ul class="navbar-list clearfix">
-                <li><a class="on" href="index.html">首页</a></li>
-                <li><a href="http://www.mycodes.net/" target="_blank">网站首页</a></li>
+                <li><a class="on" href="/index">首页</a></li>
+                <li><a href="/" target="_blank">网站首页</a></li>
             </ul>
         </div>
         <div class="top-info-wrap">
             <ul class="top-info-list clearfix">
-                <li><a href="#">欢迎：{{session('name')}}</a></li>
+                <li><a href="#">欢迎：{{session('uname')}}</a></li>
                 <li><a href="/login/destroy">退出</a></li>
             </ul>
         </div>
@@ -97,6 +97,31 @@
                     <ul class="sub-menu ab">
                         <li><a href="/order"><i class="icon-font">&#xe005;</i>订单列表</a></li>
                       
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:void()" class="aa"><i class="icon-font">&#xe003;</i>友情链接</a>
+                    <ul class="sub-menu ab">
+                        <li><a href="/listss"><i class="icon-font">&#xe005;</i>友情链接列表</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:void()" class="aa"><i class="icon-font">&#xe003;</i>会员管理</a>
+                    <ul class="sub-menu ab">
+                        <li><a href="/member"><i class="icon-font">&#xe005;</i>会员列表</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:void()" class="aa"><i class="icon-font">&#xe003;</i>留言管理</a>
+                    <ul class="sub-menu ab">
+                        <li><a href="/contacts"><i class="icon-font">&#xe005;</i>留言列表</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:void()" class="aa"><i class="icon-font">&#xe003;</i>公告管理</a>
+                    <ul class="sub-menu ab">
+                        <li><a href="/notices"><i class="icon-font">&#xe005;</i>公告列表</a></li>
+                        <li><a href="/notices/create"><i class="icon-font">&#xe005;</i>添加公告</a></li>
                     </ul>
                 </li>
             </ul>

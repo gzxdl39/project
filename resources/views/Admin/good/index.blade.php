@@ -62,13 +62,25 @@
                             <td>{{$row->stock}}</td>
                             <td>{{$row->salecnt}}</td>
                             <td>
-                                @if($row->status == 1)
-                                 新品
-                                @elseif($row->status == 2)
-                                 上架
-                                @elseif($row->status == 3)
-                                 下架
-                                 @endif
+                                      @if($row->status == 1)
+                                            @if($row->stock == 0)
+                                            下架
+                                            @else
+                                             新品
+                                             @endif
+                                        @elseif($row->status == 2)
+                                           @if($row->stock == 0)
+                                            下架
+                                            @else
+                                             上架
+                                             @endif
+                                        @elseif($row->status == 3)
+                                             @if($row->stock == 0)
+                                            下架
+                                            @else
+                                             下架
+                                             @endif
+                                         @endif
                             </td>
                             <td>
                                 <form action="/shop/{{$row->sgid}}" method="post">
@@ -76,6 +88,7 @@
                                 {{method_field("DELETE")}}
                                 <a class="btn btn-danger" href="/shop/{{$row->sgid}}/edit">修改</a>
                                  <a class="btn btn-success" href="/shop/up/{{$row->sgid}}">上架</a>
+                                 <a class="btn btn-success" href="/shop/down/{{$row->sgid}}">下架</a>
                                  <button class="btn btn-warning del" onclick="return confirm('确定要删除吗？');" >删除</button>
                                 </form>
                             </td>

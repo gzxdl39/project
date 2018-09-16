@@ -16,7 +16,8 @@ class RegisterController extends Controller
     // 加载前台注册模板
     public function index(Request $request)
     {
-      return view('Home.register');
+        $movie=movie();
+        return view('Home.register',['movie'=>$movie]);
     }
 
     //Ajax判断电话是否存在
@@ -55,7 +56,7 @@ class RegisterController extends Controller
         //对密码做加密
         $data['password']=Hash::make($data['password']);
         if(DB::table("home_user")->insert($data)){
-            return redirect("/homelogin")->with('success','注册成功');
+            return redirect("/homelogin/create")->with('success','注册成功');
         }else{
             return redirect("/homeregister")->with('error','注册失败');
         }

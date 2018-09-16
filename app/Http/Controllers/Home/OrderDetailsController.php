@@ -1,23 +1,30 @@
 <?php
 
 namespace App\Http\Controllers\Home;
-
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
-use hash;
-
-class ListsController extends Controller
+use Hash;
+class OrderDetailsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $movie=movie();
-        return view("Home.Lists.lists",['movie'=>$movie]);
+    // 加载订单管理模板
+    public function index(Request $request)
+    {     
+         //获取关联的订单数据
+        $data=DB::table('shop_orders')
+            ->join('shop_goods', 'shop_orders.goods_id', '=', 'shop_goods.gid')
+            ->join('home_user', 'shop_orders.name', '=', 'home_user.name')
+            ->select('shop_orders.*', 'shop_goods.gid', 'home_user.name','shop_goods.gname','shop_goods.price','shop_goods.gpic','shop_orders.oid')
+            ->first();
+            $movie=movie();
+           // dd($data);exit;
+        return view('Home.order.orderdetails',['data'=>$data,'movie'=>$movie]);
+        
     }
 
     /**
@@ -25,14 +32,12 @@ class ListsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
-    {
-        //友情链接
-        $list=DB::table("home_lists")->where('status','=',2)->get();
-        $movie=movie();
-        return view("Home.Lists.lists",['list'=>$list,'movie'=>$movie]);
+    public function create(){
 
-    }
+      
+    } 
+
+       
 
     /**
      * Store a newly created resource in storage.
@@ -40,31 +45,21 @@ class ListsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //友情链接添加方法
-        $data=$request->all();
-        $data=$request->except('_token');
-        $data['status']=1;
-        //把添加的数据插入数据库
-        $add=DB::table('home_lists')->insert($data);
-        //判断 匹配成功就插入数据库  失败则返回页面
-        if($add){
-            return redirect("/lists")->with('success','提交成功');
-        }else{
-            return redirect("/lists")->with('error','提交失败');
-        }
+       
     }
-
+      
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
-    {    
-
+    public function show()
+    {
+        
+       
     }
 
     /**
@@ -85,7 +80,7 @@ class ListsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
     }

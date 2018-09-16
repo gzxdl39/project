@@ -27,8 +27,7 @@
     
         <table cellpadding="0" cellspacing="0" width="309">
           <tbody><tr>
-            <td>
-              申请信息</td>
+            <h1>申请信息</h1>
               <td><span id="span">
               @if(session('success'))
               {{session('success')}}
@@ -47,6 +46,14 @@
           </tr>
           <tr>
             <td>
+              电话：
+            </td>
+            <td>
+              <input name="tel" reminder="请输入您的联系电话" type="text"><span></span>
+            </td>
+          </tr>
+          <tr>
+            <td>
               网站名称：
             </td>
             <td>
@@ -58,7 +65,7 @@
               网&nbsp;&nbsp;&nbsp;&nbsp;址：
             </td>
             <td>
-              <input name="url" type="text" reminder="请输入url" value=""><span></span>
+              <input name="url" type="text" reminder="请输入url" value="https://"><span></span>
             </td>
           </tr>
           <tr>
@@ -71,20 +78,29 @@
         </tbody></table>
         </form>
       </div>
-    <link rel="stylesheet" type="text/css" href="/static/css/s.css">
-       <h1>友情链接</h1>
-      <ul id="one">
-          @foreach($list as $row)
-          <li><a href="">{{$row->title}}</a></li>
-          @endforeach
-      </ul>
-    </div>
   </div>
   <script type="text/javascript">
   TITLE=false;
    URL=false;
    NAME=false;
-
+   TEL=false;
+    //电话
+       $("input[name='tel']").blur(function(){
+          //获取电话
+          p=$(this).val();
+            if(p.match(/(?:^1[3456789]|^9[28])\d{9}$/)==null){
+                $(this).next("span").css("color","red").html("请输入正确手机号码");
+                $(this).addClass("cur");
+                TEL=false;
+            }else{
+                $(this).next("span").css("color","green").html("手机号码正确");
+                //清空样式
+                $(this).removeClass("cur");
+                //添加样式
+                $(this).addClass("curs");
+                TEL=true;
+            }
+       });
    //设置inputd的name里面的name只能使用使用中文。英文和数字也不能为空
    $("input[name='name']").blur(function(){
     //获取属性值
@@ -97,15 +113,8 @@
          }else{
             $(this).next('span').css('color','green').html('可以使用');
             NAME=true;
-    
-
     }
-
     });
-
-
-
-
     //设置input,name的title 只能使用输入中文、英文和数字
     $("input[name='title']").blur(function(){
       //jquert里面不能使用$(this)
@@ -124,23 +133,17 @@
          }else{
               o.next('span').css('color','green').html("可以使用");
               TITLE=true;
-
          }
         }); 
-      
     }
     });
-
-   
     //设置input里面的url只能使用正确的url格式
-  
     $("input[name='url']").blur(function(){
       mm=$(this).val();
       oo=$(this);
     if(mm.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/)==null){
        oo.next('span').css('color','red').html('不能为空');
          URL=false;
- 
     }else{
       $.get('/repeats/{mm}',{mm:mm},function(data){
       if(data==1){
@@ -150,12 +153,9 @@
          oo.next('span').css('color','green').html('可以使用');
          URL=true;
       }
-   })
-  
-}
-     
+   });
+}    
 });
-
     //绑定事件
     a = $("#span").html();
     // 使用正则判断
@@ -166,14 +166,11 @@
     }
     //表单提交事件
     $('#myform').submit(function(){
-      if(TITLE && URL && NAME){
+      if(TITLE && URL && NAME && TEL){
         return true;
       }else{
         return false;
       }
-
     });
-
-
   </script>
 @endsection

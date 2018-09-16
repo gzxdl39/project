@@ -28,11 +28,13 @@
       <li class="selected"><a href="/">首页</a></li> 
       <li><a href="/list">商品列表</a></li> 
       <li><a href="/homelogin/create">我的账户</a></li> 
-      <li><a href="register">已选书籍</a></li> 
-      <li><a href="contact">联系我们</a></li> 
-      <li><a href="/personal">个人中心</a></li>
-      <li><a href="about">关于我们</a></li> 
+      <li><a href="/cart">已选书籍</a></li> 
+      <li><a href="/contact">联系我们</a></li> 
+      <li><a href="/about">公告</a></li>
+      <li><a href="/lists">友情链接</a></li>
+       @if(session('name')!=null)
       <li><a href="/homelogin">退出</a></li> 
+      @endif
      </ul> 
     </div> 
    </div> 

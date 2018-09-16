@@ -76,6 +76,17 @@ class AjaxController extends Controller
 
     }
 
+    public function down($id,$status=3)
+    {
+        //商品下架
+        $info=DB::table("shop_goods")->where("gid","=",$id)->update(['status'=>$status]);
+        if($info){
+            return redirect("/shop")->with('success','商品下架成功');
+        }else{
+            return redirect("/shop")->with('error','商品下架失败');
+        }
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

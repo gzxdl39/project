@@ -8,13 +8,13 @@
     <ul style="width:190px" class="jspop box">
       @foreach($user as $row)
       <li class=a1>
-        <div class=tx><a href="#"><i>&nbsp;</i>{{$row->cname}}</a></div>
+        <div class=tx><a href="javacript:void(0);"><i>&nbsp;</i>{{$row->cname}}</a></div>
         <div class=pop>
           <h3><a href="#"></a></h3>
           <dl>
             @foreach($row->sub as $ro)
             <dl>
-              <dt style="color: red"><a href="#"><span style="font-size: 15px;color: green;">{{$ro->cname}}</span></a></dt>
+              <dt style="color: red"><a href="javacript:void(0);"><span style="font-size: 15px;color: green;">{{$ro->cname}}</span></a></dt>
               <dd>
                 @foreach($ro->sub as $r)
                 <a class="ui-link" href="/specials/{{$r->cid}}">{{$r->cname}}</a>

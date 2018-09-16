@@ -16,7 +16,7 @@ class LoginMiddleware
     public function handle($request, Closure $next)
     {
         //检测用户是否登录(检测是否具有session信息)
-        if($request->session()->has('name')){
+        if($request->session()->has('uname')){
             //获取访问的控制器和方法
             $action=$request->route()->getActionMethod();
             $actions=explode('\\', \Route::current()->getActionName());

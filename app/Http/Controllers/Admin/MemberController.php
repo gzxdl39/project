@@ -5,21 +5,23 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
-use Gregwar\Captcha\CaptchaBuilder;
+use Hash;
 
-class ClassController extends Controller
+class MemberController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index(Request $request)
     {
-        //获取所有类别
-        $cate=DB::table("shop_cate")->where('cid','=',$id)->first();
-        // //加载添加模板
-        return view("Admin.cate.insert",['cate'=>$cate]);
+        //获取搜索关键词
+        $k=$request->input('name');
+        //获取列表数据
+        $user=DB::table("home_user")->where("name",'like',"%".$k."%")->paginate(5);
+        //加载模板
+        return view('Admin.member.index',['user'=>$user,'request'=>$request->all()]);
     }
 
     /**
@@ -29,19 +31,7 @@ class ClassController extends Controller
      */
     public function create()
     {
-        ob_clean();//清除操作
-        $builder = new CaptchaBuilder;
-        //可以设置图片宽高及字体
-        $builder->build($width = 100, $height = 40, $font = null);
-        //获取验证码的内容
-        $phrase = $builder->getPhrase();
-        //把内容存入session
-        session(['vcode'=>$phrase]);
-        //生成图片
-        header("Cache-Control: no-cache, must-revalidate");
-        header('Content-Type: image/jpeg');
-        $builder->output();
-        // die;
+
     }
 
     /**
@@ -52,12 +42,7 @@ class ClassController extends Controller
      */
     public function store(Request $request)
     {
-        $m=$_GET['m'];
-        if($m==session('vcode')){
-            return '1';
-        }else{
-            return '2';
-        }
+        
     }
 
     /**
@@ -68,9 +53,7 @@ class ClassController extends Controller
      */
     public function show($id)
     {
-        //订单详情
-        $order=DB::select("select so.goods_id,gname,gpic,sg.price,num from shop_orders as so,shop_goods as sg where sg.gid=so.goods_id and so.oid=".$id);
-        return view('Admin.order.edit',['order'=>$order]);
+        //
     }
 
     /**
@@ -81,7 +64,10 @@ class ClassController extends Controller
      */
     public function edit($id)
     {
-        //
+         //获取需要修改的数据
+        $user=DB::table("home_user")->where("id",'=',$id)->first();
+        //加载修改页面
+        return view("Admin.member.edit",['user'=>$user]);
     }
 
     /**
@@ -93,7 +79,16 @@ class ClassController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //修改数据
+        $data=$request->except(['_token','_method','reupwd','field list']);
+        //密码加密
+        $data['password']=Hash::make($data['password']);
+        // 判断是否修改成功
+        if(DB::table("home_user")->where("id","=",$id)->update($data)){
+            return redirect("/member")->with('success',"修改成功");
+        }else{
+            return redirect("/member/$id",'数据修改失败');
+        }
     }
 
     /**
@@ -104,6 +99,11 @@ class ClassController extends Controller
      */
     public function destroy($id)
     {
-        
+        //删除数据
+        if(DB::table("home_user")->where("id",'=',$id)->delete()){
+            return redirect("/member")->with('success','数据删除成功');
+        }else{
+            return redirect("/member")->with('error','数据删除失败');
+        }
     }
 }
